@@ -1,123 +1,88 @@
-# Selenium Demo Tests
+# 🚀 Selenium TestNG Demo
 
-This repository contains Selenium TestNG automation examples for:
+[![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://openjdk.java.net/)
+[![Maven](https://img.shields.io/badge/Maven-3.6%2B-blue.svg)](https://maven.apache.org/)
+[![TestNG](https://img.shields.io/badge/TestNG-7.10.2-green.svg)](https://testng.org/)
+[![Selenium](https://img.shields.io/badge/Selenium-4.25.0-purple.svg)](https://www.selenium.dev/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-1. Opening a browser and navigating to Google.
-2. Performing automatic calculation using an online scientific calculator.
-3. Searching for products on Amazon India and fetching product titles.
+A comprehensive Selenium WebDriver automation testing project using TestNG framework with Maven build system. This project demonstrates web automation testing best practices with real-world examples.
+
+## 📋 Table of Contents
+
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Test Examples](#test-examples)
+- [Running Tests](#running-tests)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
+
+## ✨ Features
+
+- **Amazon Product Search** - Automated product search and data extraction
+- **WebDriverManager Integration** - Automatic browser driver management
+- **TestNG Framework** - Advanced testing with parallel execution support
+- **Maven Build System** - Dependency management and build automation
+- **Cross-browser Testing Ready** - Easy configuration for multiple browsers
+- **Comprehensive Reporting** - Detailed HTML and XML test reports
+
+## 🛠 Prerequisites
+
+- **Java JDK 21** or compatible version
+- **Maven 3.6+** for build automation
+- **Chrome Browser** (latest stable version recommended)
+- **Git** for version control
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/HumayunK01/Selenium-test.git
+cd Selenium-test
+```
+
+### 2. Build the Project
+```bash
+mvn clean compile
+```
+
+### 3. Run Tests
+```bash
+mvn test
+```
+
+### 4. View Test Reports
+```bash
+# Open the generated HTML report
+open target/surefire-reports/index.html
+```
 
 ---
 
-## Dependencies
 
-- Java JDK (version 21 or compatible)
-- Chrome browser
-- ChromeDriver [Click here to Download ChromeDriver](https://developer.chrome.com/docs/chromedriver/downloads)
-- Add TestNG to the project dependencies
-- Add Selenium WebDriver to the project dependencies
+## 📁 Project Structure
 
----
-
-
-## Test 1: Open Browser and Navigate to Google
- 
-This test opens Chrome, navigates to Google, waits for 3 seconds, verifies the page title, and then closes the browser.  
-
-```java
-package com.selenium;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-public class DemoTest {
-    @Test
-    public void openGoogle() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.google.com");
-
-        // Wait for 3 seconds to hold the page
-        Thread.sleep(3000);
-
-        // Verify page title
-        Assert.assertEquals(driver.getTitle(), "Google");
-
-        // Close the browser
-        driver.quit();
-    }
-}
+```
+Selenium-test/
+├── src/
+│   ├── main/java/com/selenium/
+│   │   └── App.java                    # Main application class
+│   └── test/java/com/selenium/
+│       └── AmazonSearchTest.java       # Amazon product search test
+├── .gitignore                          # Git ignore rules
+├── pom.xml                            # Maven configuration
+├── testng.xml                         # TestNG suite configuration
+└── README.md                          # Project documentation
 ```
 
-## Test 2: Auto Calculation Using Online Scientific Calculator
-  
-This test performs the subtraction operation `9 - 4` using the TCS iON Scientific Calculator, logs the result in TestNG reports, and asserts the result.
+## 🧪 Test Examples
 
-```java
-package com.selenium;
+### Amazon Product Search Test
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.Reporter;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-public class CalculatorTest {
-
-    WebDriver driver;
-
-    @BeforeClass
-    public void setup() {
-        // Set ChromeDriver path
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver-win64\\chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.get("https://www.tcsion.com/OnlineAssessment/ScientificCalculator/Calculator.html");
-    }
-
-    @Test
-    public void testSubtraction() throws InterruptedException {
-        
-        // Perform 9 - 4 with small hold times
-        driver.findElement(By.id("keyPad_btn9")).click();
-        Thread.sleep(300); 
-        driver.findElement(By.id("keyPad_btnMinus")).click();
-        Thread.sleep(300);
-        driver.findElement(By.id("keyPad_btn4")).click();
-        Thread.sleep(300);
-        driver.findElement(By.id("keyPad_btnEnter")).click();
-        Thread.sleep(500); // wait for result to appear
-
-        // Get result
-        WebElement resultElement = driver.findElement(By.id("keyPad_UserInput"));
-        String result = resultElement.getAttribute("value"); // get the display value
-
-        // Show result in TestNG reports
-        Reporter.log("Result of 9 - 4 is: " + result, true);
-
-        // Assert result is correct
-        Assert.assertEquals(result, "5", "Subtraction result is incorrect!");
-
-        // Small hold after calculation
-        Thread.sleep(1000);
-    }
-
-    @AfterClass
-    public void teardown() {
-        if (driver != null) {
-            driver.quit();
-        }
-    }
-}
-```
-
-## Test 3: Amazon Product Search
-
-Searches for a product on amazon.com and fetches the first 5 product titles. Includes small holds after operations and a 5-second pause before closing the browser.
+This test demonstrates automated web scraping and data extraction from Amazon India. It searches for "laptop" and extracts product information.
 
 ```java
 package com.selenium;
@@ -131,6 +96,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import java.time.Duration;
 import java.util.List;
@@ -139,44 +105,37 @@ public class AmazonSearchTest {
 
     @Test
     public void searchAmazonProduct() {
-        // Set ChromeDriver path
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver-win64\\chromedriver.exe");
+        // Setup ChromeDriver using WebDriverManager
+        WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
 
         try {
-            // Open Amazon India
+            // Navigate to Amazon India
             driver.get("https://www.amazon.in/");
 
-            // Wait a bit for page to load
+            // Wait for page to load
             Thread.sleep(1000);
 
-            // Locate the search box
+            // Locate and use search box
             WebElement searchBox = driver.findElement(By.id("twotabsearchtextbox"));
-            Thread.sleep(300);
+            searchBox.sendKeys("laptop" + Keys.ENTER);
 
-            // Type the search query and press ENTER
-            searchBox.sendKeys("laptop");
-            searchBox.sendKeys(Keys.ENTER);
-
-            // Explicit wait for search results
+            // Wait for search results
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.s-main-slot h2")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.s-main-slot")));
 
-            // Get first 5 product titles
-            List<WebElement> products = driver.findElements(By.cssSelector("div.s-main-slot h2 span"));
-            int count = Math.min(products.size(), 5);
+            // Extract first 5 product titles
+            List<WebElement> productTitles = driver.findElements(
+                By.cssSelector("span.a-size-medium.a-color-base.a-text-normal")
+            );
 
-            for (int i = 0; i < count; i++) {
-                String title = products.get(i).getText();
-                System.out.println("Product " + (i + 1) + ": " + title);
-                Reporter.log("Product " + (i + 1) + ": " + title, true);
+            for (int i = 0; i < Math.min(5, productTitles.size()); i++) {
+                System.out.println(productTitles.get(i).getText());
             }
 
-            Thread.sleep(1000); // small hold before closing
-
         } catch (Exception e) {
-            e.printStackTrace();
+            Reporter.log("Exception caught: " + e.getMessage());
         } finally {
             driver.quit();
         }
@@ -184,14 +143,116 @@ public class AmazonSearchTest {
 }
 ```
 
-## Notes
+## 🏃 Running Tests
 
-- Use Thread.sleep() for small hold times to allow UI updates between operations.
-- Ensure all element IDs and CSS selectors match the current website versions.
-- Results are logged to both console and TestNG reports. 
+### Run All Tests
+```bash
+mvn test
+```
+
+### Run Specific Test Class
+```bash
+mvn test -Dtest=AmazonSearchTest
+```
+
+### Run with Specific Browser
+```bash
+# The project uses WebDriverManager for automatic driver management
+# No manual driver setup required!
+mvn test
+```
+
+### Generate Test Reports
+```bash
+# HTML Report (opens automatically after test execution)
+open target/surefire-reports/index.html
+
+# XML Reports
+ls target/surefire-reports/*.xml
+```
+
+## ⚙️ Configuration
+
+### TestNG Suite Configuration (`testng.xml`)
+```xml
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Amazon Suite">
+    <test name="Amazon Search Test">
+        <classes>
+            <class name="com.selenium.AmazonSearchTest"/>
+        </classes>
+    </test>
+</suite>
+```
+
+### Maven Dependencies (`pom.xml`)
+- **Selenium WebDriver 4.25.0** - Browser automation
+- **TestNG 7.10.2** - Testing framework
+- **WebDriverManager 5.6.2** - Automatic driver management
+- **Maven Surefire Plugin 3.1.2** - Test execution
+
+## 🐛 Troubleshooting
+
+### Common Issues
+
+**1. ChromeDriver Issues**
+```bash
+# The project uses WebDriverManager - no manual setup needed
+# If you encounter issues, try:
+mvn clean test
+```
+
+**2. Browser Not Found**
+- Ensure Chrome browser is installed
+- Check Chrome version compatibility
+- WebDriverManager will automatically download the correct driver
+
+**3. Test Failures**
+- Check network connectivity for Amazon access
+- Verify element selectors are up-to-date
+- Check browser console for JavaScript errors
+
+### Debug Mode
+```bash
+# Run tests in debug mode
+mvn test -Dmaven.surefire.debug
+
+# Enable verbose logging
+mvn test -X
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Contribution Guidelines
+- Follow Java coding standards
+- Add tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting PR
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [Selenium WebDriver](https://www.selenium.dev/) - Browser automation framework
+- [TestNG](https://testng.org/) - Testing framework
+- [WebDriverManager](https://github.com/bonigarcia/webdrivermanager) - Driver management library
+- [Amazon India](https://www.amazon.in/) - Test website
+
+## 📞 Support
+
+For questions or support:
+- Create an issue in the repository
+- Check existing issues for similar problems
+- Review the troubleshooting section above
 
 ---
 
-## Author
-
-- Vedant Konde
+**Happy Testing!** 🚀
